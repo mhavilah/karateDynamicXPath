@@ -1,7 +1,7 @@
 # Karate v0.92 - Dynamic XPath issues
 
 ## Overview
-A demonstration of issues with the dynamic XPath facility in Karate Framework.
+A demonstration of issues with the dynamic XPath facility in Karate Framework v0.92.
 
 - **Defective** Invocation using the Javascript Bridge karate.xmlPath()
 - **Successful** 
@@ -14,7 +14,7 @@ In Karate there are several ways to perform an XPath query on an XML document.
 
 ### Static XPath
 
-If a **static** XPath expression is used then a simple DSL call is satisfactory:
+If a **static** XPath expression is used then a simple Karate DSL call is satisfactory:
 
 ```
 * xml msg = "<msg><headers><header>From</header><header>To</header></headers><body>...</body></msg>"
@@ -25,7 +25,7 @@ If a **static** XPath expression is used then a simple DSL call is satisfactory:
 In the above example the two XPath expressions return two differently shaped results:
 
 - NodeList - list of header elements
-- Numberic - count of header elements
+- Numeric - count of header elements
 
 These scenarios are correctly handled by the Karate Core class: **com.intuit.karate.Script**:
 
@@ -118,7 +118,7 @@ This approach is illustrated in the codebase as an interim work-around to the cu
 ```java
     public static String doQuery(String xml, String xpathQuery) {
 ...
-try {
+       try {
             XPathExpression expr = compile(xpathQuery);
 
             try {
