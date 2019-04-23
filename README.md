@@ -44,7 +44,7 @@ These scenarios are correctly handled by the Karate Core class: **com.intuit.kar
  
  ### Dynamic XPath
  
- Dynamic XPaths are supported by the Javascript helper:  karate.xmlPath().
+ Dynamic XPaths are supported by the Javascript helper:  **karate.xmlPath()**.
  
  This Javascript based API supports dynamic XPath expressions, evaluated at runtime:
  
@@ -60,14 +60,14 @@ These scenarios are correctly handled by the Karate Core class: **com.intuit.kar
  * def count = eval doXPath( request, "count(//headers)" );
  ```
  
- Unfortunately, the wrapper code does not recognise the possible XPath result shapes, ie:
+ Unfortunately, the wrapper code does not recognise the many possible XPath result shapes, (from **java.xml.xpath.XPathConstants**) ie:
  
  - NodeList vs
  - Numeric 
  - String
  etc
  
- And simply invokes the Karate core ScriptBridge method:  **com.intuit.karate.core.ScriptBridge**
+ And simply invokes the Karate core ScriptBridge method:  **com.intuit.karate.core.ScriptBridge.xmlPath()**
  
  ```java
   public Object xmlPath(Object o, String path) {
@@ -87,7 +87,7 @@ These scenarios are correctly handled by the Karate Core class: **com.intuit.kar
     }    
 ```
  
-The method **XmlUtills.getNodeByPath()** makes the assumption that the XPath result will be a NodeList.
+The method **XmlUtills.getNodeByPath()** makes the assumption that the XPath result will be a Node.
 As such, XPath expressions that evaluate to a number (such as the count() XPath function) will fail to be cast:
 
 ```java
@@ -109,4 +109,59 @@ As such, XPath expressions that evaluate to a number (such as the count() XPath 
     }
 ```
 
+### XPath via Direct Java Interop
+
+An alternate to using the faulty karate.xmlPath() facility for dynamic XPath Expressions returning arbitrary shaped data is to directly invoke the Java XPath API directly via a custom Java Helper class.
+
+This approach is illustrated in the codebase as an interim work-around to the current karate.xmlPath() issues.
+
+```java
+    public static String doQuery(String xml, String xpathQuery) {
+...
+try {
+            XPathExpression expr = compile(xpathQuery);
+
+            try {
+                NodeList nodeList = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
+                result = nodeListToString(nodeList);
+            } catch (Exception xe) {
+                logger.debug("...not a NODELIST shaped result...trying NODE");
+                try {
+                    // Fallback #1 - Node result
+                    Node node = (Node) expr.evaluate(doc, XPathConstants.NODE);
+                    result = XmlUtils.toString(node);
+                    logger.debug("XPathHelper.doQuery() Node result:" + result);
+                } catch (Exception xee) {
+                    logger.debug("...not a NODE shaped result...trying NUMBER");
+                    try {
+                        // Fallback #2 - Numeric result (eg, count())
+                        Double doubleResult = (Double) expr.evaluate(doc, XPathConstants.NUMBER);
+```
+
+The above approach uses a series of stategies attempting to invoke the given dynamic XPath expression, assuming an XPath Query response shape of:
+- NodeSet
+- Node
+- Number
+- String
+
+in decreasing precedence order.
+
+For example an XPath returning an integer count() of XML elements will return throught the NUMBER path.
+
+## Building the example
+
+The source is a Maven project based on the Karate archetype project.
+
+### Prerequisites
+
+- Maven 3.x
+- Java 1.8.x
+
+Maven will download all dependencies upon first build
+
+```bash
+
+$ git clone 
+$ mvn clean test
+```
 
