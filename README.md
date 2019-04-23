@@ -154,14 +154,50 @@ The source is a Maven project based on the Karate archetype project.
 
 ### Prerequisites
 
+- git
 - Maven 3.x
 - Java 1.8.x
+- IntelliJ (optional)
 
 Maven will download all dependencies upon first build
 
 ```bash
-
-$ git clone 
+$ git clone https://github.com/mhavilah/karateDynamicXPath.git
+$ cd karateDynamicXPath
 $ mvn clean test
 ```
 
+## Running the example
+
+The example consists of two tests:
+
+- A Karate bootstrap test harness for the **users.feature**
+  - expectations.ExpectationsTest
+- A Unit test for the Java XPathHelper class
+  - expectations.util.XPathHelperTest
+
+The Karate test will run 4 scenarios.
+
+The last scenario uses the faulty **karate.xmlPath()** API with a Numerical response type XPath Expression.
+
+To disable this faulty scenario, just uncomment the "@ignore" tag within the **users/users.feature** Karate script:
+
+```
+Feature: Example of Karate Xpath success/failure
+
+  Background:
+...
+...
+# 
+# The following will fail due to the NUMBER result -> NodeList cast error
+#  javax.xml.xpath.XPathExpressionException: com.sun.org.apache.xpath.internal.XPathException: Can not convert #NUMBER to a NodeList!
+# @ignore
+  Scenario: count all users via karate xpath
+    * print "==========================================================================="
+    * print "= This is the failing scenario, which is invoked via the Karate ScriptBridge"
+    * print "==========================================================================="
+
+    * print testUsers
+    * def userCount = karate.xmlPath(testUsers,xpathQuery)
+    * match userCount == 4
+```    
