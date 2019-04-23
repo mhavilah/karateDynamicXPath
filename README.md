@@ -16,7 +16,7 @@ In Karate there are several ways to perform an XPath query on an XML document.
 
 If a **static** XPath expression is used then a simple Karate DSL call is satisfactory:
 
-```
+```cucumber
 * xml msg = "<msg><headers><header>From</header><header>To</header></headers><body>...</body></msg>"
 * def headers = $msg //header
 * def count = get msg  count(//header)
@@ -184,7 +184,7 @@ Within the **ExpectationsTest**, the last scenario uses the faulty **karate.xmlP
 
 To disable this faulty scenario, just uncomment the "@ignore" tag within the **users/users.feature** Karate script:
 
-```
+```cucumber
 Feature: Example of Karate Xpath success/failure
 
   Background:
