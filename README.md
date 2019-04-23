@@ -178,7 +178,9 @@ The example consists of two tests:
 
 The Karate test will run 4 scenarios.
 
-The last scenario uses the faulty **karate.xmlPath()** API with a Numerical response type XPath Expression.
+### Failing Tests
+
+Within the **ExpectationsTest**, the last scenario uses the faulty **karate.xmlPath()** API with a Numerical response type XPath Expression.
 
 To disable this faulty scenario, just uncomment the "@ignore" tag within the **users/users.feature** Karate script:
 
