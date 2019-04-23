@@ -56,8 +56,8 @@ These scenarios are correctly handled by the Karate Core class: **com.intuit.kar
       return response;
     }
  """
- * def result = eval doXPath( request, "//headers" );
- * def count = eval doXPath( request, "count(//headers)" );
+ * def result = doXPath( request, "//headers" );
+ * def count = doXPath( request, "count(//headers)" );
  ```
  
  Unfortunately, the wrapper code does not recognise the many possible XPath result shapes, (from **java.xml.xpath.XPathConstants**) ie:
