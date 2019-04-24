@@ -9,6 +9,10 @@ https://github.com/intuit/karate
   - invocation with direct Java interop
   - invocation with Karate DSL 
 
+## Related Karate Github Issue
+- https://github.com/intuit/karate/issues/747
+- Resolved in development branch. For release in Karate Core v0.9.3
+
 ## Details
 
 In Karate there are several ways to perform an XPath query on an XML document.
