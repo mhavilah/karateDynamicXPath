@@ -13,6 +13,8 @@ https://github.com/intuit/karate
 - https://github.com/intuit/karate/issues/747
 - Resolved in development branch. For release in Karate Core v0.9.3
 
+Based on the Issue Submission process at: [Intuit Karate Issue submission process](https://github.com/intuit/karate/wiki/How-to-Submit-an-Issue)
+
 ## Details
 
 In Karate there are several ways to perform an XPath query on an XML document.
@@ -155,7 +157,7 @@ For example an XPath returning an integer count() of XML elements will return th
 
 ## Building the example
 
-The source is a Maven project based on the Karate archetype project.
+The source is a Maven project based on the [Karate archetype project](https://github.com/intuit/karate#quickstart).
 
 ### Prerequisites
 
@@ -187,7 +189,7 @@ The Karate test will run several test scenarios with a mixture of dynamic XPath 
 - node/single XML elemet
 - number
 
-### Failing Tests
+### Failing Test
 
 Within the **ExpectationsTest**, the last scenario uses the faulty **karate.xmlPath()** API with a Numerical response type XPath Expression.
 
