@@ -98,7 +98,7 @@ public class XPathHelper {
                 Transformer xform = TransformerFactory.newInstance().newTransformer();
                 // Optional formatting
                 xform.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-                xform.setOutputProperty(OutputKeys.INDENT, "yes");
+                // xform.setOutputProperty(OutputKeys.INDENT, "yes");       // Pretty print with multi-line indentation
                 xform.transform(new DOMSource(elem), new StreamResult(buf));
                 result.append(buf.toString());
             } catch (Exception e) {

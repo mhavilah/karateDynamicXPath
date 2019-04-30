@@ -1,4 +1,5 @@
-function fn() {    
+function fn() {
+  karate.callSingle( "classpath:banner.js" );
   var env = karate.env; // get system property 'karate.env'
   karate.log('karate.env system property was:', env);
   if (!env) {

@@ -27,8 +27,32 @@ Feature: Example of Karate Xpath success/failure
 
   Scenario: select a user via xpath
     * def lastUser = karate.xmlPath(testUsers,'/users/user[last()]')
-    * match lastUser ==  "<user><name><firstName>Homer</firstName><lastName>Simpson</lastName></name><age>40</age></user>"
     * print "LastUser:", lastUser
+    * match lastUser ==  "<user><name><firstName>Homer</firstName><lastName>Simpson</lastName></name><age>40</age></user>"
+
+  Scenario: select a user first name via xpath
+    * def firstName = karate.xmlPath(testUsers,'/users/user[last()]/name/firstName')
+    * print "firstName:", firstName
+    * match firstName ==  "Homer"
+
+  Scenario: select a user's name text via xpath
+    * def firstUser = karate.xmlPath(testUsers,'//user[1]/name/firstName/text()')
+    * print "FirstUser:", firstUser
+    * match firstUser ==  "John"
+
+  # Note the following: returns the wrapping element - not just the element's text value
+  Scenario: select a user first name via a custom Java XPath Helper
+    * xmlstring testUserXMLString = testUsers
+    * def firstName = xpathQueryFn(testUserXMLString,'/users/user[last()]/name/firstName')
+    * print "firstName:", firstName
+    * match firstName ==  "<firstName>Homer</firstName>"
+
+  # Now explicitly retrieve the element's text value
+  Scenario: select a user first name via a custom Java XPath Helper
+    * xmlstring testUserXMLString = testUsers
+    * def firstName = xpathQueryFn(testUserXMLString,'/users/user[last()]/name/firstName/text()')
+    * print "firstName:", firstName
+    * match firstName ==  "Homer"
 
   Scenario: count all users via a custom Java XPath Helper
 # Force a string representation of the XML
@@ -38,8 +62,14 @@ Feature: Example of Karate Xpath success/failure
     * print "Result:", userCount
     * match userCount == 4
 
-# 
-# The following will fail due to the NUMBER result -> NodeList cast error
+  Scenario: select a user via a custom Java XPath Helper
+    * xmlstring testUserXMLString = testUsers
+    * def lastUser = xpathQueryFn(testUserXMLString,'/users/user[last()]')
+    * print "LastUser:", lastUser
+    * match lastUser ==  "<user><name><firstName>Homer</firstName><lastName>Simpson</lastName></name><age>40</age></user>"
+
+# In Karate v0.9.2 and earlier the following will fail.
+# Due to the NUMBER result -> NodeList cast error within the Karate ScriptBridge class
 #  javax.xml.xpath.XPathExpressionException: com.sun.org.apache.xpath.internal.XPathException: Can not convert #NUMBER to a NodeList!
 # @ignore
   Scenario: count all users via karate xpath
