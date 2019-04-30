@@ -4,10 +4,10 @@
 A demonstration of issues with the dynamic XPath facility in Karate Framework v0.92.
 https://github.com/intuit/karate
 
-- **Defective** Invocation using the Javascript Bridge karate.xmlPath()
+- **Defective** Invocation of "dynamic" xpaths using the Javascript Bridge karate.xmlPath()
 - **Successful** 
   - invocation with direct Java interop
-  - invocation with Karate DSL 
+  - invocation of static XPaths with Karate DSL 
 
 ## Related Karate Github Issue
 - https://github.com/intuit/karate/issues/747
