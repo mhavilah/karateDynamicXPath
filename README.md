@@ -181,7 +181,11 @@ The example consists of two tests:
 - A Unit test for the Java XPathHelper class
   - expectations.util.XPathHelperTest
 
-The Karate test will run 4 scenarios.
+The Karate test will run several test scenarios with a mixture of dynamic XPath invocation approaches and response data shapes:
+
+- node List/set of XML elements
+- node/single XML elemet
+- number
 
 ### Failing Tests
 
